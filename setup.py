@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="weibo_2_album",
-    version="0.0.2",
+    version="0.0.3",
     author="Yunzhi Gao",
     author_email="gaoyunzhi@gmail.com",
     description="Return photo list and caption (markdown format) from weibo.",
@@ -24,6 +24,7 @@ setuptools.setup(
         'telegram_util >= 0.0.34',
         'pic_cut >= 0.0.8',
         'bs4',
+        'lxml',
     ],
     python_requires='>=3.0',
 )
