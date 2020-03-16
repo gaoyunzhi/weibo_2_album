@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-name = 'web_2_album'
+name = 'weibo_2_album'
 
 import math
 import os
