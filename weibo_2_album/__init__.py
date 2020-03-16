@@ -7,6 +7,7 @@ import math
 import os
 import cached_url
 import re
+import yaml
 
 prefix = 'https://m.weibo.cn/statuses/show?id='
 
@@ -18,6 +19,6 @@ def getWid(path):
 
 def get(path):
 	wid = getWid(path)
-	cached_url.get(prefix + wid)
+	json = yaml.load cached_url.get(prefix + wid)
 	
 
