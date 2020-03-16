@@ -4,14 +4,14 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="web_2_album",
+    name="weibo_2_album",
     version="0.0.1",
     author="Yunzhi Gao",
     author_email="gaoyunzhi@gmail.com",
-    description="Return photo list and caption (markdown format) from web.",
+    description="Return photo list and caption (markdown format) from weibo.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/gaoyunzhi/web_2_album",
+    url="https://github.com/gaoyunzhi/weibo_2_album",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
