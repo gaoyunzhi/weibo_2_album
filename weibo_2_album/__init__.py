@@ -10,7 +10,6 @@ import re
 import yaml
 from telegram_util import cutCaption
 import pic_cut
-import html2markdown
 from bs4 import BeautifulSoup
 
 prefix = 'https://m.weibo.cn/statuses/show?id='
@@ -23,12 +22,14 @@ def getWid(path):
 
 def getCap(json, cap_limit):
 	text = json['text']
-	b = BeautifulSoup(text, 
-		features="lxml")
-	for elm in b.find_all('a'):
-		md = '[%s](%s)' % (elm['text'], elm['href'])
-		text = text.replace(str(elm), md)
-	b = BeautifulSoup(text, features="lxml")
+	b = BeautifulSoup(text, features="html.parser")
+	while b.find('a'):
+		elm = b.find('a')
+		md = '<div class="weibo_2_album">[%s](%s)</div>' % \
+			(elm.text, elm['href'])
+		print(BeautifulSoup(md, features='html.parser').find('div', class_='weibo_2_album'))
+		elm.replaceWith(BeautifulSoup(md, features='html.parser').\
+			find('div', class_='weibo_2_album'))
 	return cutCaption(b.text, '', cap_limit)
 
 def getImages(json, image_limit):

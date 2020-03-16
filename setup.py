@@ -23,7 +23,6 @@ setuptools.setup(
         'pyyaml',
         'telegram_util >= 0.0.34',
         'pic_cut >= 0.0.8',
-        'html2markdown >= 0.1.7',
         'bs4',
     ],
     python_requires='>=3.0',
