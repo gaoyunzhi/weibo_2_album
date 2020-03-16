@@ -20,17 +20,17 @@ def getWid(path):
 		path = path[:index]
 	return path.split('/')[-1]
 
-def getCap(json, cap_limit):
+def getCap(json, path, cap_limit):
 	text = json['text']
-	b = BeautifulSoup(text, features="html.parser")
-	while b.find('a'):
-		elm = b.find('a')
-		md = '<div class="weibo_2_album">[%s](%s)</div>' % \
-			(elm.text, elm['href'])
-		print(BeautifulSoup(md, features='html.parser').find('div', class_='weibo_2_album'))
-		elm.replaceWith(BeautifulSoup(md, features='html.parser').\
-			find('div', class_='weibo_2_album'))
-	return cutCaption(b.text, '', cap_limit)
+	b = BeautifulSoup(text, features="lxml")
+	print(b)
+	for elm in b.find_all('a'):
+		if not elm.get('href'):
+			continue
+		md = '[%s](%s)' % (elm.text, elm['href'])
+		elm.replaceWith(BeautifulSoup(md, features='lxml'))
+	suffix = '[%s](%s)' % (json['user']['screen_name'], path)
+	return cutCaption(b.text, suffix, cap_limit)
 
 def getImages(json, image_limit):
 	raw = [x['url'] for x in json['pics']]
@@ -40,7 +40,7 @@ def get(path, cap_limit = 1000, img_limit = 9):
 	wid = getWid(path)
 	json = yaml.load(cached_url.get(prefix + wid), Loader=yaml.FullLoader)
 	json = json['data']
-	return getImages(json, img_limit), getCap(json, cap_limit)
+	return getImages(json, img_limit), getCap(json, path, cap_limit)
 
 	
 
