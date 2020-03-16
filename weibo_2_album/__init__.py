@@ -23,13 +23,12 @@ def getWid(path):
 def getCap(json, path, cap_limit):
 	text = json['text']
 	b = BeautifulSoup(text, features="lxml")
-	print(b)
 	for elm in b.find_all('a'):
 		if not elm.get('href'):
 			continue
 		md = '[%s](%s)' % (elm.text, elm['href'])
 		elm.replaceWith(BeautifulSoup(md, features='lxml'))
-	suffix = '[%s](%s)' % (json['user']['screen_name'], path)
+	suffix = ' [%s](%s)' % (json['user']['screen_name'], path)
 	return cutCaption(b.text, suffix, cap_limit)
 
 def getImages(json, image_limit):
@@ -38,7 +37,10 @@ def getImages(json, image_limit):
 
 def get(path, cap_limit = 1000, img_limit = 9):
 	wid = getWid(path)
-	json = yaml.load(cached_url.get(prefix + wid), Loader=yaml.FullLoader)
+	try:
+		json = yaml.load(cached_url.get(prefix + wid), Loader=yaml.FullLoader)
+	except:
+		return [], ''
 	json = json['data']
 	return getImages(json, img_limit), getCap(json, path, cap_limit)
 
