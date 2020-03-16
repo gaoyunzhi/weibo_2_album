@@ -4,8 +4,9 @@
 import weibo_2_album
 
 def test():
-	print(weibo_2_album.get(
-		'https://www.weibo.com/1648544895/IyEMGc6xw'))
+	print(weibo_2_album.get('https://m.weibo.cn/status/4483347235306786'))
+	# print(weibo_2_album.get(
+	# 	'https://www.weibo.com/1648544895/IyEMGc6xw'))
 	# print(weibo_2_album.get(
 	# 	'https://www.weibo.com/6433426551/IuUsbf8m6?filter=hot&root_comment_id=0&type=comment')
 	# print(weibo_2_album.get(
