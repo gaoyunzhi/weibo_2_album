@@ -7,7 +7,10 @@ import math
 import os
 import cached_url
 
+prefix = 'https://m.weibo.cn/statuses/show?id='
+
 def get(path):
-	cached_url.get(path)
+	wid = re.split('(/|\?)', path)
+	cached_url.get(prefix + wid)
 	
 
