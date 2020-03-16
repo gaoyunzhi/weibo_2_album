@@ -21,6 +21,9 @@ setuptools.setup(
     install_requires=[
         'cached_url >= 0.0.6'
         'pyyaml',
+        'telegram_util >= 0.0.34',
+        'pic_cut >= 0.0.8',
+        'html2markdown >= 0.1.7',
     ],
     python_requires='>=3.0',
 )
