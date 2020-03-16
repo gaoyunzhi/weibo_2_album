@@ -6,11 +6,18 @@ name = 'weibo_2_album'
 import math
 import os
 import cached_url
+import re
 
 prefix = 'https://m.weibo.cn/statuses/show?id='
 
+def getWid(path):
+	index = path.find('?')
+	if index > -1:
+		path = path[:index]
+	return path.split('/')[-1]
+
 def get(path):
-	wid = re.split('(/|\?)', path)
+	wid = getWid(path)
 	cached_url.get(prefix + wid)
 	
 
