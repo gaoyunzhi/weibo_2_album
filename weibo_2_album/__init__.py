@@ -37,14 +37,16 @@ def getImages(json, image_limit):
 	raw = [x['url'] for x in json['pics']]
 	return pic_cut.getCutImages(raw, image_limit)
 
-def get(path, cap_limit = 1000, img_limit = 9):
+def get(path, cap_limit = 1000, text_limit = 4000, img_limit = 9):
 	wid = getWid(path)
 	try:
 		json = yaml.load(cached_url.get(prefix + wid), Loader=yaml.FullLoader)
 	except:
 		return [], ''
 	json = json['data']
-	return getImages(json, img_limit), getCap(json, path, cap_limit)
+	imgs = getImages(json, img_limit)
+	cap = getCap(json, path, cap_limit if imgs else text_limit)
+	return imgs, cap
 
 	
 
