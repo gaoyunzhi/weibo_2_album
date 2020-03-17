@@ -30,7 +30,7 @@ def getCap(json, path, cap_limit):
 		elm.replaceWith(BeautifulSoup(md, features='lxml').find('p'))
 	suffix = ' [%s](%s)' % (json['user']['screen_name'], path)	
 	return cutCaption(
-		BeautifulSoup(str(b).replace('<br/>', '\n'), features='lxml').text, 
+		BeautifulSoup(str(b).replace('<br/>', '\n'), features='lxml').text.strip(), 
 		suffix, cap_limit)
 
 def getImages(json, image_limit):
