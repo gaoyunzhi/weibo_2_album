@@ -19,10 +19,10 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        'cached_url >= 0.0.6'
+        'cached_url'
         'pyyaml',
-        'telegram_util >= 0.0.34',
-        'pic_cut >= 0.0.8',
+        'telegram_util',
+        'pic_cut',
         'bs4',
         'lxml',
     ],
