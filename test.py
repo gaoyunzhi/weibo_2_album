@@ -2,17 +2,33 @@
 # -*- coding: utf-8 -*-
 
 import weibo_2_album
+from PIL import Image
+import yaml
+from telegram.ext import Updater
+from telegram import InputMediaPhoto
 
-def test():
-	print(weibo_2_album.get('https://m.weibo.cn/status/4483347235306786'))
-	# print(weibo_2_album.get(
-	# 	'https://www.weibo.com/1648544895/IyEMGc6xw'))
-	# print(weibo_2_album.get(
-	# 	'https://www.weibo.com/6433426551/IuUsbf8m6?filter=hot&root_comment_id=0&type=comment')
-	# print(weibo_2_album.get(
-	# 	'https://www.weibo.com/1588066533/Iu6Q9rxsA?type=comment#_rnd1584356495395')
-	# print(weibo_2_album.get(
-	# 	'https://www.weibo.com/tv/v/IysDf4bn9?fid=1034:4482128985915435')
+with open('CREDENTIALS') as f:
+	CREDENTIALS = yaml.load(f, Loader=yaml.FullLoader)
+tele = Updater(CREDENTIALS['bot_token'], use_context=True)
+
+def test(url, rotate=False):
+	imgs, cap = weibo_2_album.get(url)
+
+	if rotate:
+		for index, img_path in enumerate(imgs):
+			img = Image.open(img_path)
+			img = img.rotate(180)
+			img.save(img_path)
+			img.save('tmp_image/%s.jpg' % index)
+			
+	group = [InputMediaPhoto(open(imgs[0], 'rb'), caption=cap, parse_mode='Markdown')] + \
+		[InputMediaPhoto(open(x, 'rb')) for x in imgs[1:]]
+	tele.bot.send_media_group(-1001198682178, group, timeout = 20*60)
 	
+if __name__=='__main__':
+	test('https://m.weibo.cn/status/4483347235306786')
+	# test('http://weibointl.api.weibo.cn/share/131595305.html', rotate=True)
+	# test('http://www.douban.com/people/zhuyige/status/2869326971/')
+
 if __name__=='__main__':
 	test()
