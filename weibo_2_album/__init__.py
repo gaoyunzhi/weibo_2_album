@@ -28,11 +28,10 @@ def getCap(json, path, cap_limit):
 			continue
 		md = '[%s](%s)' % (elm.text, elm['href'])
 		elm.replaceWith(BeautifulSoup(md, features='lxml').find('p'))
-	suffix = ' [%s](%s)' % (json['user']['screen_name'], path)
-	with open('tmp/test.html','w') as f:
-		f.write(str(b))
-	print(b.get_text(separator="\n"))
-	return cutCaption(b.get_text(separator="\n"), suffix, cap_limit)
+	suffix = ' [%s](%s)' % (json['user']['screen_name'], path)	
+	return cutCaption(
+		BeautifulSoup(str(b).replace('<br/>', '\n'), features='lxml').text, 
+		suffix, cap_limit)
 
 def getImages(json, image_limit):
 	raw = [x['url'] for x in json['pics']]
