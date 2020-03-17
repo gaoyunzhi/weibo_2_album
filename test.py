@@ -29,6 +29,3 @@ if __name__=='__main__':
 	test('https://m.weibo.cn/status/4483347235306786')
 	# test('http://weibointl.api.weibo.cn/share/131595305.html', rotate=True)
 	# test('http://www.douban.com/people/zhuyige/status/2869326971/')
-
-if __name__=='__main__':
-	test()
