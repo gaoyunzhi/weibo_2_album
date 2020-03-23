@@ -27,8 +27,11 @@ def getCap(json):
 		elm.replaceWith(BeautifulSoup(md, features='lxml').find('p'))
 	return BeautifulSoup(str(b).replace('<br/>', '\n'), features='lxml').text.strip()
 
+def enlarge(url):
+	return url.replace('orj360', 'large')
+	
 def getImages(json):
-	return [x['url'] for x in json.get('pics', [])]
+	return [enlarge(x['url']) for x in json.get('pics', [])]
 
 def get(path):
 	wid = getWid(path)
