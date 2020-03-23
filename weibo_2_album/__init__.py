@@ -11,9 +11,10 @@ from web_2_album import Result
 prefix = 'https://m.weibo.cn/statuses/show?id='
 
 def getWid(path):
-	index = path.find('?')
-	if index > -1:
-		path = path[:index]
+	for special_chat in ['?', '#']:
+		index = path.find(special_chat)
+		if index > -1:
+			path = path[:index]
 	return path.split('/')[-1]
 
 def getCap(json):
@@ -38,6 +39,8 @@ def get(path):
 		return r
 	json = json['data']
 	r.imgs = getImages(json)
+	r.cap_html = json['text']
+	# TODO title
 	r.cap = getCap(json)
 	return r
 

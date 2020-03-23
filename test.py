@@ -16,4 +16,4 @@ def test(url, rotate=False):
 	album_sender.send(chat, url, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('https://m.weibo.cn/status/4485600361478310?from=groupmessage&isappinstalled=0')
+	test('https://m.weibo.cn/detail/4485589606424811#comment')
