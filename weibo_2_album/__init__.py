@@ -43,7 +43,7 @@ def get(path):
 	json = json['data']
 	r.imgs = getImages(json)
 	r.cap_html = json['text']
-	# TODO title
+	r.title = json['status_title']
 	r.cap = getCap(json)
 	return r
 
