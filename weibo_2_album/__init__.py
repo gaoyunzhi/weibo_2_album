@@ -6,7 +6,7 @@ name = 'weibo_2_album'
 import cached_url
 import yaml
 from bs4 import BeautifulSoup
-from web_2_album import Result
+from telegram_util import AlbumResult as Result
 
 prefix = 'https://m.weibo.cn/statuses/show?id='
 

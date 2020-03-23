@@ -1,3 +1,2 @@
-web_2_album
 cached_url
 telegram_util
