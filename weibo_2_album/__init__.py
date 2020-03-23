@@ -27,7 +27,7 @@ def getCap(json):
 	return BeautifulSoup(str(b).replace('<br/>', '\n'), features='lxml').text.strip()
 
 def getImages(json):
-	return [x['url'] for x in json['pics']]
+	return [x['url'] for x in json.get('pics', [])]
 
 def get(path):
 	wid = getWid(path)
