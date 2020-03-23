@@ -6,7 +6,9 @@ Return photo list and caption (markdown format) from weibo.
 
 ```
 import weibo_2_album
-photo_filename_list, caption = weibo_2_album.get(url)
+result = weibo_2_album.get(url)
+result.imgs
+result.cap
 ```
 
 ## how to install

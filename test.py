@@ -2,17 +2,18 @@
 # -*- coding: utf-8 -*-
 
 import weibo_2_album
-from PIL import Image
 import yaml
 from telegram.ext import Updater
-from telegram import InputMediaPhoto
+import album_sender
 
 with open('CREDENTIALS') as f:
 	CREDENTIALS = yaml.load(f, Loader=yaml.FullLoader)
 tele = Updater(CREDENTIALS['bot_token'], use_context=True)
+chat = tele.bot.get_chat(-1001198682178)
 
 def test(url, rotate=False):
-	imgs, cap = weibo_2_album.get(url)
+	r = weibo_2_album.get(url)
+	album_sender.send(chat, url, r, rotate = rotate)
 
 	if rotate:
 		for index, img_path in enumerate(imgs):
@@ -20,10 +21,6 @@ def test(url, rotate=False):
 			img = img.rotate(180)
 			img.save(img_path)
 			img.save('tmp_image/%s.jpg' % index)
-			
-	group = [InputMediaPhoto(open(imgs[0], 'rb'), caption=cap, parse_mode='Markdown')] + \
-		[InputMediaPhoto(open(x, 'rb')) for x in imgs[1:]]
-	tele.bot.send_media_group(-1001198682178, group, timeout = 20*60)
 	
 if __name__=='__main__':
 	test('https://m.weibo.cn/status/4483347235306786')
