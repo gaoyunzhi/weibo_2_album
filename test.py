@@ -18,4 +18,4 @@ def test(url, rotate=False):
 	
 if __name__=='__main__':
 	os.system('pip install --user -r requirements.txt --upgrade')
-	test('https://m.weibo.cn/detail/4485589606424811#comment')
+	test('video.h5.weibo.cn/1034:4485685185282073/4485685777733499')

@@ -45,6 +45,8 @@ def get(path):
 	r.cap_html = json['text']
 	r.title = json['status_title']
 	r.cap = getCap(json)
+	r.video = json.get('page_info', {}).get('media_info', {}).get(
+		'stream_url_hd', '')
 	return r
 
 	
