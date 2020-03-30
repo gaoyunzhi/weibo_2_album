@@ -17,5 +17,4 @@ def test(url, rotate=False):
 	album_sender.send(chat, url, r, rotate = rotate)
 	
 if __name__=='__main__':
-	os.system('pip install --user -r requirements.txt --upgrade')
-	test('video.h5.weibo.cn/1034:4485685185282073/4485685777733499')
+	test('https://www.weibo.com/1897681455/IAnf30RPr?type=comment')
