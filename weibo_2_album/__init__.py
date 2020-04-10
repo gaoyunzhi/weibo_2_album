@@ -7,15 +7,9 @@ import cached_url
 import yaml
 from bs4 import BeautifulSoup
 from telegram_util import AlbumResult as Result
+from telegram_util import getWid
 
 prefix = 'https://m.weibo.cn/statuses/show?id='
-
-def getWid(path):
-	for special_chat in ['?', '#']:
-		index = path.find(special_chat)
-		if index > -1:
-			path = path[:index]
-	return path.split('/')[-1]
 
 def getCap(json):
 	text = json['text']
