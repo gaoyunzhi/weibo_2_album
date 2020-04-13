@@ -15,8 +15,7 @@ def getRetweetCap(json):
 	json = json.get('retweeted_status')
 	if not json:
 		return ''
-	return json.get('longText', {}).get('longTextContent') or \
-		json.get('retweeted_status', {}).get('text', '')
+	return json.get('longText', {}).get('longTextContent') or json['text']
 
 def isprintable(s):
     try: 
@@ -28,7 +27,7 @@ def getPrintable(s):
 	return ''.join(x for x in s if isprintable(x))
 
 def getCap(json):
-	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json))
+	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json)).replace('转发微博', '')
 	b = BeautifulSoup(text, features="lxml")
 	for elm in b.find_all('a'):
 		if not elm.get('href'):
@@ -44,6 +43,10 @@ def enlarge(url):
 def getImages(json):
 	return [enlarge(x['url']) for x in json.get('pics', [])]
 
+def getVideo(json):
+	return json.get('page_info', {}).get('media_info', {}).get(
+		'stream_url_hd', '')
+
 def get(path):
 	wid = getWid(path)
 	r = Result()
@@ -56,8 +59,7 @@ def get(path):
 	r.cap_html = json['text']
 	r.title = json['status_title']
 	r.cap = getCap(json)
-	r.video = json.get('page_info', {}).get('media_info', {}).get(
-		'stream_url_hd', '')
+	r.video = getVideo(json) or getVideo(json.get('retweeted_status', {}))
 	return r
 
 	
