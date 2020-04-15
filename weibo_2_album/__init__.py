@@ -64,6 +64,8 @@ def get(path):
 	r.title = json['status_title']
 	r.cap = getCap(json)
 	r.video = getVideo(json) or getVideo(json.get('retweeted_status', {}))
+	r.wid = json.get('id')
+	r.rwid = json.get('retweeted_status', {}).get('id')
 	return r
 
 	
