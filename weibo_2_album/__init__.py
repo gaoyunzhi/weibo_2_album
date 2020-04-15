@@ -57,7 +57,7 @@ def get(path):
 		return r
 	json = json['data']
 	if 'test' in sys.argv:
-		with open(wid + '.json', 'w') as f:
+		with open('tmp/%s.json' % wid, 'w') as f:
 			f.write(str(json))
 	r.imgs = getImages(json) or getImages(json.get('retweeted_status', {}))
 	r.cap_html = json['text']
