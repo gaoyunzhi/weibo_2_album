@@ -8,6 +8,7 @@ import yaml
 from bs4 import BeautifulSoup
 from telegram_util import AlbumResult as Result
 from telegram_util import getWid
+import sys
 
 prefix = 'https://m.weibo.cn/statuses/show?id='
 
@@ -55,6 +56,9 @@ def get(path):
 	except:
 		return r
 	json = json['data']
+	if 'test' in sys.argv:
+		with open(wid + '.json', 'w') as f:
+			f.write(str(json))
 	r.imgs = getImages(json) or getImages(json.get('retweeted_status', {}))
 	r.cap_html = json['text']
 	r.title = json['status_title']
