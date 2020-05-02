@@ -14,8 +14,8 @@ chat = tele.bot.get_chat(-1001198682178)
 
 def test(url, rotate=False):
 	r = weibo_2_album.get(url)
+	print(r)
 	album_sender.send(chat, url, r, rotate = rotate)
 	
 if __name__=='__main__':
-	# test('https://m.weibo.cn/status/ICXZi110B?mblogid=ICXZi110B&luicode=10000011&lfid=1076036520732164')
-	test('https://video.h5.weibo.cn/1034:4497954375925769/4497968009207325')
+	test('https://m.weibo.cn/status/4498794949744605?wm=3333_2001&amp;sourcetype=weixin&amp;from=timeline&amp;isappinstalled=0')
