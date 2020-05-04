@@ -40,7 +40,8 @@ def getCap(json):
 
 def enlarge(url):
 	candidate = url.replace('orj360', 'large')
-	if 0 < len(cached_url.get(candidate, force_cache = True)) < 1 << 20:
+	candidate_content = cached_url.get(candidate, mode='b', force_cache = True)
+	if 0 < len(candidate_content) < 1 << 20:
 		return candidate
 	return url
 	
