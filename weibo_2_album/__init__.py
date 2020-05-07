@@ -31,7 +31,7 @@ def getPrintable(s):
 
 def isLongPic(path):
 	ext = os.path.splitext(path)[1] or '.html'
-	cache = 'tmp/' + getFileName(path) + ext
+	cache = 'tmp/' + cached_url.getFileName(path) + ext
 	img = Image.open(cache)
 	w, h = img.size
 	return h > w * 2.5
@@ -55,7 +55,6 @@ def enlarge(url):
 	return url
 	
 def getImages(json):
-	print(json.get('pics', []))
 	return [enlarge(x['url']) for x in json.get('pics', [])]
 
 def getVideo(json):
