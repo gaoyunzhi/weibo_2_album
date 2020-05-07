@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 from telegram_util import AlbumResult as Result
 from telegram_util import getWid
 import sys
+import os
+from PIL import Image
 
 prefix = 'https://m.weibo.cn/statuses/show?id='
 
@@ -27,6 +29,13 @@ def isprintable(s):
 def getPrintable(s):
 	return ''.join(x for x in s if isprintable(x))
 
+def isLongPic(path):
+	ext = os.path.splitext(path)[1] or '.html'
+	cache = 'tmp/' + getFileName(path) + ext
+	img = Image.open(cache)
+	w, h = img.size
+	return h > w * 2.5
+
 def getCap(json):
 	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json)).replace('转发微博', '')
 	b = BeautifulSoup(text, features="lxml")
@@ -41,11 +50,12 @@ def getCap(json):
 def enlarge(url):
 	candidate = url.replace('orj360', 'large')
 	candidate_content = cached_url.get(candidate, mode='b', force_cache = True)
-	if 0 < len(candidate_content) < 1 << 20:
+	if 0 < len(candidate_content) < 1 << 20 or isLongPic(candidate):
 		return candidate
 	return url
 	
 def getImages(json):
+	print(json.get('pics', []))
 	return [enlarge(x['url']) for x in json.get('pics', [])]
 
 def getVideo(json):

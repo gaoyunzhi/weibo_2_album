@@ -18,4 +18,4 @@ def test(url, rotate=False):
 	album_sender.send(chat, url, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('https://m.weibo.cn/status/J0e8ah58p')
+	test('https://m.weibo.cn/status/J0GJe5Bto')
