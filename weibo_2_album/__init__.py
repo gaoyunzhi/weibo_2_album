@@ -34,7 +34,7 @@ def isLongPic(path):
 	cache = 'tmp/' + cached_url.getFileName(path) + ext
 	img = Image.open(cache)
 	w, h = img.size
-	return h > w * 2.5
+	return h > w * 2.1
 
 def getCap(json):
 	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json)).replace('转发微博', '')
@@ -42,9 +42,13 @@ def getCap(json):
 	for elm in b.find_all('a'):
 		if not elm.get('href'):
 			continue
+		if '@' == elm.text[:1]:
+			elm.decompose()
+			continue
 		md = '[%s](%s)' % (elm.text, elm['href'])
 		elm.replaceWith(BeautifulSoup(md, features='lxml').find('p'))
 	line = BeautifulSoup(str(b).replace('<br/>', '\n'), features='lxml').text.strip()
+	line = line.replace("//:", '')
 	return line
 
 def enlarge(url):
