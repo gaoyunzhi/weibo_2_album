@@ -16,7 +16,7 @@ channel = tele.bot.get_chat('@web_record')
 def test(url, rotate=False):
 	r = weibo_2_album.get(url)
 	print(r.cap)
-	album_sender.send(chat, url, r, rotate = rotate)
+	album_sender.send(channel, url, r, rotate = rotate)
 	
 if __name__=='__main__':
 	test('https://m.weibo.cn/status/J2tenmsyM')

@@ -51,10 +51,23 @@ def getCap(json):
 	line = line.replace("//:", '')
 	return line
 
+# should put to some util package, 
+# but I don't want util to be dependent on cached_url
+def isAnimated(path): 
+	cached_url.get(path, force_cache=True, mode='b')
+	gif = Image.open(cached_url.getFilePath(path))
+	try:
+		gif.seek(1)
+	except EOFError:
+		return False
+	else:
+		return True
+
 def enlarge(url):
 	candidate = url.replace('orj360', 'large')
 	candidate_content = cached_url.get(candidate, mode='b', force_cache = True)
-	if 0 < len(candidate_content) < 1 << 20 or isLongPic(candidate):
+	if (0 < len(candidate_content) < 1 << 20 or isLongPic(candidate) or 
+		isAnimated(candidate)):
 		return candidate
 	return url
 	
