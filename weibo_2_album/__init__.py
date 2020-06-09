@@ -36,6 +36,11 @@ def isLongPic(path):
 	w, h = img.size
 	return h > w * 2.1
 
+def getHash(json):
+	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json)).replace('转发微博', '')
+	b = BeautifulSoup(text, features="lxml")
+	return hash(b.text)
+
 def getCap(json):
 	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json)).replace('转发微博', '')
 	b = BeautifulSoup(text, features="lxml")
@@ -96,6 +101,7 @@ def get(path):
 	r.video = getVideo(json) or getVideo(json.get('retweeted_status', {}))
 	r.wid = json.get('id')
 	r.rwid = json.get('retweeted_status', {}).get('id', '')
+	r.hash = getHash(json)
 	return r
 
 	
