@@ -7,7 +7,7 @@ import cached_url
 import yaml
 from bs4 import BeautifulSoup
 from telegram_util import AlbumResult as Result
-from telegram_util import getWid
+from telegram_util import getWid, matchKey
 import sys
 import os
 from PIL import Image
@@ -47,7 +47,7 @@ def getCap(json):
 	for elm in b.find_all('a'):
 		if not elm.get('href'):
 			continue
-		if 'weibo.cn/search' in elm.get('href'):
+		if matchKey(elm.get('href'), ['weibo.cn/p/index', 'weibo.cn/search', 'weibo.com/show']):
 			elm.replaceWith(elm.text)
 			continue
 		if '@' == elm.text[:1]:
