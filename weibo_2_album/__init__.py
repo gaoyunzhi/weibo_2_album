@@ -47,7 +47,7 @@ def getCap(json):
 	for elm in b.find_all('a'):
 		if not elm.get('href'):
 			continue
-		if matchKey(elm.get('href'), ['weibo.cn/p/index', 'weibo.cn/search', 'weibo.com/show']):
+		if matchKey(elm.get('href'), ['weibo.cn/p', 'weibo.cn/search', 'weibo.com/show']):
 			elm.replaceWith(elm.text)
 			continue
 		if '@' == elm.text[:1]:
