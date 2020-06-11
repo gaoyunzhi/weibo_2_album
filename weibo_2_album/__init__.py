@@ -74,7 +74,7 @@ def isAnimated(path):
 def enlarge(url):
 	candidate = url.replace('orj360', 'large')
 	candidate_content = cached_url.get(candidate, mode='b', force_cache = True)
-	if (0 < len(candidate_content) < 1 << 20 or isLongPic(candidate) or 
+	if (0 < len(candidate_content) < 1 << 22 or isLongPic(candidate) or 
 		isAnimated(candidate)):
 		return candidate
 	return url
