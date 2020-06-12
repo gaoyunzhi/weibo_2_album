@@ -10,6 +10,7 @@ from telegram_util import AlbumResult as Result
 from telegram_util import getWid, matchKey
 import sys
 import os
+import hashlib
 from PIL import Image
 
 prefix = 'https://m.weibo.cn/statuses/show?id='
@@ -39,7 +40,7 @@ def isLongPic(path):
 def getHash(json):
 	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json)).replace('转发微博', '')
 	b = BeautifulSoup(text, features="lxml")
-	return hash(b.text)
+	return b.text[:10] + '_' + hashlib.sha224(b.text.encode('utf-8')).hexdigest()[:10]
 
 def getCap(json):
 	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json)).replace('转发微博', '')
