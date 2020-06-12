@@ -105,6 +105,7 @@ def get(path):
 	r.wid = json.get('id')
 	r.rwid = json.get('retweeted_status', {}).get('id', '')
 	r.hash = getHash(json)
+	r.url = path
 	return r
 
 	
