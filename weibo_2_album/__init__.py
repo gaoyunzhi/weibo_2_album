@@ -40,7 +40,7 @@ def isLongPic(path):
 def getHash(json):
 	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json)).replace('转发微博', '')
 	b = BeautifulSoup(text, features="lxml")
-	return b.text[:10] + '_' + hashlib.sha224(b.text.encode('utf-8')).hexdigest()[:10]
+	return ''.join(b.text[:10].split()) + '_' + hashlib.sha224(b.text.encode('utf-8')).hexdigest()[:10]
 
 def getCap(json):
 	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json)).replace('转发微博', '')
