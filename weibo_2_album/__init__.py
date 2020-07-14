@@ -87,20 +87,21 @@ def getVideo(json):
 	return json.get('page_info', {}).get('media_info', {}).get(
 		'stream_url_hd', '')
 
-def get(path):
+def get(path, json=None):
 	wid = getWid(path)
 	r = Result()
-	try:
-		json = yaml.load(cached_url.get(prefix + wid), Loader=yaml.FullLoader)
-	except:
-		return r
-	json = json['data']
+	if not json:
+		try:
+			json = yaml.load(cached_url.get(prefix + wid), Loader=yaml.FullLoader)
+			json = json['data']
+		except:
+			return r
 	if 'test' in sys.argv:
 		with open('tmp/%s.json' % wid, 'w') as f:
 			f.write(str(json))
 	r.imgs = getImages(json) or getImages(json.get('retweeted_status', {}))
 	r.cap_html = json['text']
-	r.title = json['status_title']
+	r.title = json.get('status_title')
 	r.cap = getCap(json)
 	r.video = getVideo(json) or getVideo(json.get('retweeted_status', {}))
 	r.wid = json.get('id')
