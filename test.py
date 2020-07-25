@@ -15,7 +15,8 @@ chat = tele.bot.get_chat(-1001198682178)
 
 def test(url, rotate=False):
 	r = weibo_2_album.get(url)
+	print(r.imgs)
 	album_sender.send(chat, url, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('https://m.weibo.cn/detail/4529250478338718#comment')
+	test('https://m.weibo.cn/detail/4529592491319532#comment')
