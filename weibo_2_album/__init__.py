@@ -56,7 +56,7 @@ def getCap(json):
 	for elm in b.find_all('a'):
 		if not elm.get('href'):
 			continue
-		if matchKey(elm.get('href'), ['video.weibo.com']):
+		if matchKey(elm.get('href'), ['video.weibo.com', 'openapp']):
 			elm.decompose()
 			continue
 		if matchKey(elm.get('href'), ['weibo.cn/p', 'weibo.cn/search', 'weibo.com/show']):
