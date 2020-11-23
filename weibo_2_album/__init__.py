@@ -28,7 +28,7 @@ def isprintable(s):
     else: return True
 
 def getPrintable(s):
-	return ''.join(x for x in s if isprintable(x))
+	return ''.join(x for x in s if isprintable(x)).replace('转发微博', '')
 
 def isLongPic(path):
 	ext = os.path.splitext(path)[1] or '.html'
@@ -42,11 +42,22 @@ def getHash(json):
 	b = BeautifulSoup(text, features="lxml")
 	return ''.join(b.text[:10].split()) + '_' + hashlib.sha224(b.text.encode('utf-8')).hexdigest()[:10]
 
+def getRawText(json):
+	main_text = getPrintable(json['text']).strip()
+	retweet_text = getPrintable(getRetweetCap(json)).strip()
+	if not retweet_text:
+		return main_text
+	if not main_text:
+		return retweet_text
+	return retweet_text + '\n【网评】' + main_text
+
 def getCap(json):
-	text = getPrintable(json['text'] + '\n\n' + getRetweetCap(json)).replace('转发微博', '')
-	b = BeautifulSoup(text, features="lxml")
+	b = BeautifulSoup(getRawText(json), features="lxml")
 	for elm in b.find_all('a'):
 		if not elm.get('href'):
+			continue
+		if matchKey(elm.get('href'), ['video.weibo.com']):
+			elm.decompose()
 			continue
 		if matchKey(elm.get('href'), ['weibo.cn/p', 'weibo.cn/search', 'weibo.com/show']):
 			elm.replaceWith(elm.text)
@@ -58,6 +69,9 @@ def getCap(json):
 		elm.replaceWith(BeautifulSoup(md, features='lxml').find('p'))
 	line = BeautifulSoup(str(b).replace('<br/>', '\n'), features='lxml').text.strip()
 	line = line.replace("//:", '')
+	line = line.replace('\n', '\n\n')
+	for _ in range(5):
+		line = line.replace('\n\n\n', '\n\n')
 	return line
 
 # should put to some util package, 
