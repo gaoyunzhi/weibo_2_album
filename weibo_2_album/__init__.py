@@ -48,7 +48,8 @@ def cleanupCap(text):
 	for elm in b.find_all('a'):
 		if not elm.get('href'):
 			continue
-		if matchKey(elm.get('href'), ['video.weibo.com', '/openapp', 'feature/applink	']):
+		print(elm.get('href'))
+		if matchKey(elm.get('href'), ['video.weibo.com', '/openapp', 'feature/applink', 'weibo.com/tv']):
 			elm.decompose()
 			continue
 		if matchKey(elm.get('href'), ['weibo.cn/p', 'weibo.cn/search', 'weibo.com/show']):
