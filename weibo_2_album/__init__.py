@@ -28,7 +28,7 @@ def isprintable(s):
     else: return True
 
 def getPrintable(s):
-	return ''.join(x for x in s if isprintable(x)).replace('转发微博', '').replce('投稿人', '')
+	return ''.join(x for x in s if isprintable(x)).replace('转发微博', '').replace('投稿人', '')
 
 def isLongPic(path):
 	ext = os.path.splitext(path)[1] or '.html'
