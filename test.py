@@ -15,6 +15,7 @@ chat = tele.bot.get_chat(-1001198682178)
 
 def test(url, rotate=False):
 	r = weibo_2_album.get(url)
+	print(r)
 	album_sender.send(chat, url, r, rotate = rotate)
 	
 if __name__=='__main__':

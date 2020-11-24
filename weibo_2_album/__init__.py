@@ -42,21 +42,13 @@ def getHash(json):
 	b = BeautifulSoup(text, features="lxml")
 	return ''.join(b.text[:10].split()) + '_' + hashlib.sha224(b.text.encode('utf-8')).hexdigest()[:10]
 
-def getRawText(json):
-	main_text = getPrintable(json['text']).strip()
-	retweet_text = getPrintable(getRetweetCap(json)).strip()
-	if not retweet_text:
-		return main_text
-	if not main_text:
-		return retweet_text
-	return retweet_text + '\n【网评】' + main_text
-
-def getCap(json):
-	b = BeautifulSoup(getRawText(json), features="lxml")
+def cleanupCap(text):
+	text = getPrintable(text).strip()
+	b = BeautifulSoup(text, features="lxml")
 	for elm in b.find_all('a'):
 		if not elm.get('href'):
 			continue
-		if matchKey(elm.get('href'), ['video.weibo.com', 'openapp']):
+		if matchKey(elm.get('href'), ['video.weibo.com', '/openapp', 'feature/applink	']):
 			elm.decompose()
 			continue
 		if matchKey(elm.get('href'), ['weibo.cn/p', 'weibo.cn/search', 'weibo.com/show']):
@@ -67,12 +59,21 @@ def getCap(json):
 			continue
 		md = '[%s](%s)' % (elm.text, elm['href'])
 		elm.replaceWith(BeautifulSoup(md, features='lxml').find('p'))
-	line = BeautifulSoup(str(b).replace('<br/>', '\n'), features='lxml').text.strip()
-	line = line.replace("//:", '')
-	line = line.replace('\n', '\n\n')
+	text = BeautifulSoup(str(b).replace('<br/>', '\n'), features='lxml').text.strip()
+	text = text.replace("//:", '')
+	text = text.replace('\n', '\n\n')
 	for _ in range(5):
-		line = line.replace('\n\n\n', '\n\n')
-	return line
+		text = text.replace('\n\n\n', '\n\n')
+	return text.strip()
+
+def getCap(json):
+	main_text = cleanupCap(json['text'])
+	retweet_text = cleanupCap(getRetweetCap(json))
+	if not retweet_text:
+		return main_text
+	if not main_text:
+		return retweet_text
+	return retweet_text + '\n\n【网评】' + main_text
 
 # should put to some util package, 
 # but I don't want util to be dependent on cached_url
