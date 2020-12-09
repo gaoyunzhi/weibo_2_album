@@ -10,8 +10,8 @@ import os
 with open('CREDENTIALS') as f:
 	CREDENTIALS = yaml.load(f, Loader=yaml.FullLoader)
 tele = Updater(CREDENTIALS['bot_token'], use_context=True)
-chat = tele.bot.get_chat(-1001198682178)
-# channel = tele.bot.get_chat('@web_record')
+# chat = tele.bot.get_chat(-1001198682178)
+chat = tele.bot.get_chat('@web_record')
 
 def test(url, rotate=False):
 	r = weibo_2_album.get(url)
@@ -20,4 +20,4 @@ def test(url, rotate=False):
 	album_sender.send(chat, url, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('https://m.weibo.cn/detail/4578069887325941')
+	test('https://m.weibo.cn/status/4569486260444196')
