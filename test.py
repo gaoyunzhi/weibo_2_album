@@ -17,7 +17,7 @@ def test(url, rotate=False):
 	r = weibo_2_album.get(url)
 	print(r.imgs)
 	print(r.video)
-	album_sender.send(chat, url, r, rotate = rotate)
+	# album_sender.send(chat, url, r, rotate = rotate)
 	
 if __name__=='__main__':
-	test('https://m.weibo.cn/status/4569486260444196')
+	test('https://m.weibo.cn/detail/4585474025325107#comment')
