@@ -24,6 +24,7 @@ setuptools.setup(
         'bs4',
         'lxml',
         'telegram_util',
+        'Pillow',
     ],
     python_requires='>=3.0',
 )
